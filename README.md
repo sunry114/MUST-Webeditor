@@ -1,4 +1,4 @@
-# Etherpad: A real-time collaborative editor for the web
+# MUST Webeditor: A real-time collaborative editor on the web.
 
 ![Demo Etherpad Animated Jif](doc/public/etherpad_demo.gif "Etherpad in action")
 
