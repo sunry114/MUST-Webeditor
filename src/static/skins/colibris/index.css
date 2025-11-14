@@ -1,22 +1,27 @@
 :root {
-  --etherpad-color: #64d29b;
+  --etherpad-color: #d26664;
   --etherpad-color-dark: #4a5d5c;
   --etherpad-border: oklch(92.8% 0.006 264.531);
   --muted-text: oklch(44.6% 0.03 256.802);
   --muted-border: oklch(87.2% 0.01 258.338);
-  --muted-background: hsl(240 4.8% 95.9%);
   --ep-color: rgb(22 163 74);
   --warm-green-olive: #7c9a3e;
   --warm-green-moss: #8fae4a;
   --warm-green-lime: #b7c96c;
   --warm-green-avocado: #6e8b3d;
   --warm-green-spring: #a3c85a;
+  --muted-background: hsl(0 0% 96%);
+  /* 灰白与透明度变量 */
+  --bg-base: hsl(0 0% 100% / 0.85);
+  --bg-2: hsl(0 0% 96% / 0.85);
+  --card-bg: hsl(0 0% 100% / 0.72);
+  --card-border: hsl(0 0% 80% / 0.5);
 }
 
 
 body {
   border-top: 0;
-  background: oklch(98.5% 0.002 247.839);
+  background: linear-gradient(135deg, var(--bg-base), var(--bg-2));
   display: flex;
   flex-direction: column;
 }
@@ -168,8 +173,10 @@ body nav {
 #wrapper, .pad-datalist {
   width: 100%;
   max-width: 28rem;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: saturate(1.1) blur(8px);
+  -webkit-backdrop-filter: saturate(1.1) blur(8px);
   border-radius: 0.75rem;
   box-shadow: 0 1px 2px 0 #0001;
   margin: 2rem auto auto;
@@ -200,10 +207,10 @@ ul {
   flex-grow: 1;
   background: linear-gradient(
     to bottom right,
-    #d1fae5,   /* emerald-100 */
-    #f0fdfa,   /* teal-50 */
-    #dbeafe,   /* blue-100 */
-    #c7d2fe    /* indigo-200 */
+    hsl(0 0% 100% / 0.60),
+    hsl(0 0% 90% / 0.60),
+    hsl(0 0% 80% / 0.60),
+    hsl(0 0% 65% / 0.60)
   );
 }
 
