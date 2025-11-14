@@ -1,10 +1,10 @@
 {
-  "name": "etherpad",
+  "name": "mustwebeditor",
   "description": "A free and open source realtime collaborative editor",
   "homepage": "https://etherpad.org",
   "type": "module",
   "keywords": [
-    "etherpad",
+    "mustwebeditor",
     "realtime",
     "collaborative",
     "editor"
@@ -34,7 +34,8 @@
     "makeDocs": "pnpm --filter bin run makeDocs"
   },
   "dependencies": {
-    "ep_etherpad-lite": "link:src"
+    "ep_etherpad-lite": "link:src",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "admin": "link:admin",

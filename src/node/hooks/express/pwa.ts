@@ -1,8 +1,8 @@
-import {ArgsExpressType} from "../../types/ArgsExpressType";
+import { ArgsExpressType } from "../../types/ArgsExpressType";
 import settings from '../../utils/Settings';
 
 const pwa = {
-  name: settings.title || "Etherpad",
+  name: settings.title || "MUST Webeditor",
   short_name: settings.title,
   description: "A collaborative online editor",
   icons: [
@@ -23,8 +23,8 @@ const pwa = {
   background_color: "#0f775b"
 }
 
-exports.expressCreateServer = (hookName:string, args:ArgsExpressType, cb:Function) => {
-  args.app.get('/manifest.json', (req:any, res:any) => {
+exports.expressCreateServer = (hookName: string, args: ArgsExpressType, cb: Function) => {
+  args.app.get('/manifest.json', (req: any, res: any) => {
     res.json(pwa);
   });
 

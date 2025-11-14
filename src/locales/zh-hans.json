@@ -67,7 +67,7 @@
 	"index.labelPad": "记事本名称（可选）",
 	"index.placeholderPadEnter": "输入记事本名称…",
 	"index.createAndShareDocuments": "实时创建和共享文档",
-	"index.createAndShareDocumentsDescription": "Etherpad允许您实时协作编辑文档，就像在浏览器中运行的实时多人编辑器一样。",
+	"index.createAndShareDocumentsDescription": "MUST Webeditor允许您实时协作编辑文档，就像在浏览器中运行的实时多人编辑器一样。",
 	"pad.toolbar.bold.title": "粗体（Ctrl-B）",
 	"pad.toolbar.italic.title": "斜体（Ctrl-I）",
 	"pad.toolbar.underline.title": "下划线（Ctrl-U）",

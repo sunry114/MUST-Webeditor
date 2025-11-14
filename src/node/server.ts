@@ -22,11 +22,11 @@
  * limitations under the License.
  */
 
-import {PluginType} from "./types/Plugin";
-import {ErrorCaused} from "./types/ErrorCaused";
+import { PluginType } from "./types/Plugin";
+import { ErrorCaused } from "./types/ErrorCaused";
 import log4js from 'log4js';
 import pkg from '../package.json';
-import {checkForMigration} from "../static/js/pluginfw/installer";
+import { checkForMigration } from "../static/js/pluginfw/installer";
 import axios from "axios";
 
 import settings from './utils/Settings';
@@ -51,7 +51,7 @@ const addProxyToAxios = (url: URL) => {
   }
 }
 
-if(process.env['http_proxy']) {
+if (process.env['http_proxy']) {
   console.log("Using proxy: " + process.env['http_proxy'])
   addProxyToAxios(new URL(process.env['http_proxy']));
 }
@@ -68,17 +68,17 @@ if (process.env['https_proxy']) {
  * early check for version compatibility before calling
  * any modules that require newer versions of NodeJS
  */
-import {enforceMinNodeVersion, checkDeprecationStatus} from './utils/NodeVersion';
+import { enforceMinNodeVersion, checkDeprecationStatus } from './utils/NodeVersion';
 enforceMinNodeVersion(pkg.engines.node.replace(">=", ""));
 checkDeprecationStatus(pkg.engines.node.replace(">=", ""), '2.1.0');
 
-import {check} from './utils/UpdateCheck';
+import { check } from './utils/UpdateCheck';
 const db = require('./db/DB');
 const express = require('./hooks/express');
 const hooks = require('../static/js/pluginfw/hooks');
 const pluginDefs = require('../static/js/pluginfw/plugin_defs');
 const plugins = require('../static/js/pluginfw/plugins');
-import {Gate} from './utils/promises';
+import { Gate } from './utils/promises';
 const stats = require('./stats')
 
 const logger = log4js.getLogger('server');
@@ -98,8 +98,8 @@ let state = State.INITIAL;
 
 const removeSignalListener = (signal: NodeJS.Signals, listener: NodeJS.SignalsListener) => {
   logger.debug(`Removing ${signal} listener because it might interfere with shutdown tasks. ` +
-               `Function code:\n${listener.toString()}\n` +
-               `Current stack:\n${new Error()!.stack!.split('\n').slice(1).join('\n')}`);
+    `Function code:\n${listener.toString()}\n` +
+    `Current stack:\n${new Error()!.stack!.split('\n').slice(1).join('\n')}`);
   process.off(signal, listener);
 };
 
@@ -141,11 +141,11 @@ exports.start = async () => {
 
       // eslint-disable-next-line promise/no-promise-in-callback
       exports.exit(err)
-          .catch((err: ErrorCaused) => {
-            logger.error('Error in process exit', err);
-            // eslint-disable-next-line n/no-process-exit
-            process.exit(1);
-          });
+        .catch((err: ErrorCaused) => {
+          logger.error('Error in process exit', err);
+          // eslint-disable-next-line n/no-process-exit
+          process.exit(1);
+        });
     });
     // As of v14, Node.js does not exit when there is an unhandled Promise rejection. Convert an
     // unhandled rejection into an uncaught exception, which does cause Node.js to exit.
@@ -174,13 +174,13 @@ exports.start = async () => {
     await checkForMigration();
     await plugins.update();
     const installedPlugins = (Object.values(pluginDefs.plugins) as PluginType[])
-        .filter((plugin) => plugin.package.name !== 'ep_etherpad-lite')
-        .map((plugin) => `${plugin.package.name}@${plugin.package.version}`)
-        .join(', ');
+      .filter((plugin) => plugin.package.name !== 'ep_etherpad-lite')
+      .map((plugin) => `${plugin.package.name}@${plugin.package.version}`)
+      .join(', ');
     logger.info(`Installed plugins: ${installedPlugins}`);
     logger.debug(`Installed parts:\n${plugins.formatParts()}`);
     logger.debug(`Installed server-side hooks:\n${plugins.formatHooks('hooks', false)}`);
-    await hooks.aCallAll('loadSettings', {settings});
+    await hooks.aCallAll('loadSettings', { settings });
     await hooks.aCallAll('createServer');
   } catch (err) {
     logger.error('Error occurred while starting Etherpad');
@@ -190,7 +190,7 @@ exports.start = async () => {
     return await exports.exit(err);
   }
 
-  logger.info('Etherpad is running');
+  logger.info('MUST Webeditor is running');
   state = State.RUNNING;
   // @ts-ignore
   startDoneGate.resolve();
@@ -210,7 +210,7 @@ exports.stop = async () => {
       break;
     case State.STOPPING:
       await stopDoneGate;
-      // fall through
+    // fall through
     case State.INITIAL:
     case State.STOPPED:
     case State.EXITING:
@@ -246,7 +246,7 @@ exports.stop = async () => {
 
 let exitGate: any;
 let exitCalled = false;
-exports.exit = async (err: ErrorCaused|string|null = null) => {
+exports.exit = async (err: ErrorCaused | string | null = null) => {
   /* eslint-disable no-process-exit */
   if (err === 'SIGTERM') {
     // Termination from SIGTERM is not treated as an abnormal termination.
@@ -278,7 +278,7 @@ exports.exit = async (err: ErrorCaused|string|null = null) => {
       break;
     case State.EXITING:
       await exitGate;
-      // fall through
+    // fall through
     case State.WAITING_FOR_EXIT:
       return;
     default:
@@ -293,13 +293,13 @@ exports.exit = async (err: ErrorCaused|string|null = null) => {
   // on the timeout so that the timeout itself does not prevent Node.js from exiting.
   setTimeout(() => {
     logger.error('Something that should have been cleaned up during the shutdown hook (such as ' +
-                'a timer, worker thread, or open connection) is preventing Node.js from exiting');
+      'a timer, worker thread, or open connection) is preventing Node.js from exiting');
 
     if (settings.dumpOnUncleanExit) {
       wtfnode.dump();
     } else {
       logger.error('Enable `dumpOnUncleanExit` setting to get a dump of objects preventing a ' +
-                  'clean exit');
+        'clean exit');
     }
 
     logger.error('Forcing an unclean exit...');
@@ -314,4 +314,4 @@ exports.exit = async (err: ErrorCaused|string|null = null) => {
 if (require.main === module) exports.start();
 
 // @ts-ignore
-if (typeof(PhusionPassenger) !== 'undefined') exports.start();
+if (typeof (PhusionPassenger) !== 'undefined') exports.start();

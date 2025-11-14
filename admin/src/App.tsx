@@ -1,17 +1,17 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
-import {connect} from 'socket.io-client'
-import {isJSONClean} from './utils/utils.ts'
-import {NavLink, Outlet, useNavigate} from "react-router-dom";
-import {useStore} from "./store/store.ts";
-import {LoadingScreen} from "./utils/LoadingScreen.tsx";
-import {Trans, useTranslation} from "react-i18next";
-import {Cable, Construction, Crown, NotepadText, Wrench, PhoneCall, LucideMenu} from "lucide-react";
+import { connect } from 'socket.io-client'
+import { isJSONClean } from './utils/utils.ts'
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useStore } from "./store/store.ts";
+import { LoadingScreen } from "./utils/LoadingScreen.tsx";
+import { Trans, useTranslation } from "react-i18next";
+import { Cable, Construction, Crown, NotepadText, Wrench, PhoneCall, LucideMenu } from "lucide-react";
 
 const WS_URL = import.meta.env.DEV ? 'http://localhost:9001' : ''
 export const App = () => {
   const setSettings = useStore(state => state.setSettings);
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(true)
 
@@ -86,33 +86,33 @@ export const App = () => {
     }
   }, []);
 
-  return <div id="wrapper" className={`${sidebarOpen ? '': 'closed' }`}>
-    <LoadingScreen/>
+  return <div id="wrapper" className={`${sidebarOpen ? '' : 'closed'}`}>
+    <LoadingScreen />
     <div className="menu">
       <div className="inner-menu">
         <span>
-                    <Crown width={40} height={40}/>
-                    <h1>Etherpad</h1>
-                </span>
-        <ul onClick={()=>{
+          <Crown width={40} height={40} />
+          <h1>MUST Webeditor</h1>
+        </span>
+        <ul onClick={() => {
           if (window.innerWidth < 768) {
             setSidebarOpen(false)
           }
         }}>
-          <li><NavLink to="/plugins"><Cable/><Trans i18nKey="admin_plugins"/></NavLink></li>
-          <li><NavLink to={"/settings"}><Wrench/><Trans i18nKey="admin_settings"/></NavLink></li>
-          <li><NavLink to={"/help"}> <Construction/> <Trans i18nKey="admin_plugins_info"/></NavLink></li>
-          <li><NavLink to={"/pads"}><NotepadText/><Trans
-            i18nKey="ep_admin_pads:ep_adminpads2_manage-pads"/></NavLink></li>
-          <li><NavLink to={"/shout"}><PhoneCall/>Communication</NavLink></li>
+          <li><NavLink to="/plugins"><Cable /><Trans i18nKey="admin_plugins" /></NavLink></li>
+          <li><NavLink to={"/settings"}><Wrench /><Trans i18nKey="admin_settings" /></NavLink></li>
+          <li><NavLink to={"/help"}> <Construction /> <Trans i18nKey="admin_plugins_info" /></NavLink></li>
+          <li><NavLink to={"/pads"}><NotepadText /><Trans
+            i18nKey="ep_admin_pads:ep_adminpads2_manage-pads" /></NavLink></li>
+          <li><NavLink to={"/shout"}><PhoneCall />Communication</NavLink></li>
         </ul>
       </div>
     </div>
-      <button id="icon-button" onClick={() => {
-        setSidebarOpen(!sidebarOpen)
-      }}><LucideMenu/></button>
+    <button id="icon-button" onClick={() => {
+      setSidebarOpen(!sidebarOpen)
+    }}><LucideMenu /></button>
     <div className="innerwrapper">
-      <Outlet/>
+      <Outlet />
     </div>
   </div>
 }
